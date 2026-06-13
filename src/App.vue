@@ -18,12 +18,28 @@
           <span class="info-label">机器型号:</span>
           <span class="info-value">{{ modelName }}</span>
         </p>
+        <p class="info-row">
+          <span class="info-label">机器吨位:</span>
+          <span class="info-value">300T</span>
+        </p>
+        <p class="info-row">
+          <span class="info-label">射胶量:</span>
+          <span class="info-value">562g</span>
+        </p>
+        <p class="info-row">
+          <span class="info-label">射胶压力:</span>
+          <span class="info-value">221 Mpa</span>
+        </p>
+        <p class="info-row">
+          <span class="info-label">保压压力:</span>
+          <span class="info-value">177 Mpa</span>
+        </p>
       </section>
 
       <section class="countdown-area" aria-label="倒计时">
         <div class="countdown-circle" :class="{ timeout: isTimeout }">{{ secondsLeft }}</div>
-        <p class="connection-message" :class="{ timeout: isTimeout }">{{ connectionMessage }}</p>
-        <van-button v-if="isTimeout" class="retry-button" type="primary" round @click="retry">
+        <p class="connection-message" :class="{ timeout: isTimeout }" v-html="connectionMessage"></p>
+        <van-button v-show="isTimeout" class="retry-button" type="primary" round @click="retry">
           重试
         </van-button>
       </section>
@@ -80,7 +96,7 @@ const currentPage = ref('connect')
 const secondsLeft = ref(30)
 const isTimeout = computed(() => secondsLeft.value === 0)
 const connectionMessage = computed(() =>
-  isTimeout.value ? '连接超时' : '正在连接注塑机，请在设备上允许操作。'
+  isTimeout.value ? '连接超时' : '正在连接注塑机...<br>请在设备上允许操作'
 )
 
 const themeVars = {
