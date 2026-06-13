@@ -9,64 +9,176 @@
       <p class="setup3-subtitle">选择参数类别，调整具体数值</p>
     </section>
 
-    <section class="parameter-layout" aria-label="参数设置">
-      <aside class="parameter-tabs" aria-label="参数分类">
-        <button
-          v-for="item in categories"
-          :key="item"
-          class="parameter-tab"
-          :class="{ active: activeCategory === item }"
-          type="button"
-          @click="activeCategory = item"
-        >
-          <span class="tab-icon" aria-hidden="true">
-            <svg v-if="item === '料筒温度'" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
-            <svg v-else-if="item === '注射速度'" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            <svg v-else-if="item === '注射压力'" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            <svg v-else-if="item === '保压'" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <svg v-else width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v6h.01M6 10v2M6 14v2M6 18v2M6 22v-2M12 2v4M12 8v2M12 12v2M12 16v2M12 20v2M18 2v3M18 8v2M18 14v2M18 18v2"/><circle cx="6" cy="8" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="18" cy="5" r="2"/></svg>
-          </span>
-          <span class="tab-text">{{ item }}</span>
-        </button>
-      </aside>
+    <nav class="category-tabs" aria-label="参数分类">
+      <button
+        v-for="cat in categories"
+        :key="cat"
+        class="category-tab"
+        :class="{ active: activeCategory === cat }"
+        type="button"
+        @click="activeCategory = cat"
+      >
+        <span class="tab-icon" aria-hidden="true">
+          <svg v-if="cat === '料筒温度'" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+          <svg v-else-if="cat === '注射速度'" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <svg v-else-if="cat === '注射压力'" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <svg v-else-if="cat === '保压'" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v6h.01M6 10v2M6 14v2M6 18v2M6 22v-2M12 2v4M12 8v2M12 12v2M12 16v2M12 20v2M18 2v3M18 8v2M18 14v2M18 18v2"/><circle cx="6" cy="8" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="18" cy="5" r="2"/></svg>
+        </span>
+        <span class="tab-text">{{ cat }}</span>
+      </button>
+    </nav>
 
-      <section class="parameter-content" aria-label="参数详情">
-        <div class="parameter-content-header">
-          <span class="parameter-content-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-          </span>
-          <span class="parameter-content-title">{{ activeCategory }}</span>
-        </div>
-        <div class="parameter-divider"></div>
+    <section class="param-section">
+      <div class="param-section-header">
+        <span class="param-section-title">{{ activeCategory }}</span>
+      </div>
 
-        <div v-if="activeCategory === '注射速度'" class="parameter-list">
-          <div class="parameter-card">
-            <div class="parameter-card-header">
-              <span class="parameter-card-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/></svg>
-              </span>
-              <span class="parameter-card-name">参数1</span>
-            </div>
-            <van-stepper v-model="speedOne" class="parameter-stepper" integer />
-          </div>
-          <div class="parameter-card">
-            <div class="parameter-card-header">
-              <span class="parameter-card-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/></svg>
-              </span>
-              <span class="parameter-card-name">参数2</span>
-            </div>
-            <van-stepper v-model="speedTwo" class="parameter-stepper" integer />
+      <!-- 料筒温度 -->
+      <div v-if="activeCategory === '料筒温度'" class="param-group">
+        <div class="param-row">
+          <span class="param-name">一段 (加料段)</span>
+          <div class="param-control">
+            <van-stepper v-model="barrelTemp.zone1" class="param-stepper" integer :min="100" :max="350" />
+            <span class="param-unit">°C</span>
           </div>
         </div>
-
-        <div v-else class="parameter-empty">
-          <div class="empty-icon">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div class="param-row">
+          <span class="param-name">二段 (压缩段)</span>
+          <div class="param-control">
+            <van-stepper v-model="barrelTemp.zone2" class="param-stepper" integer :min="100" :max="350" />
+            <span class="param-unit">°C</span>
           </div>
-          <p>{{ activeCategory }} 参数待设置</p>
         </div>
-      </section>
+        <div class="param-row">
+          <span class="param-name">三段 (计量段)</span>
+          <div class="param-control">
+            <van-stepper v-model="barrelTemp.zone3" class="param-stepper" integer :min="100" :max="350" />
+            <span class="param-unit">°C</span>
+          </div>
+        </div>
+        <div class="param-row">
+          <span class="param-name">喷嘴温度</span>
+          <div class="param-control">
+            <van-stepper v-model="barrelTemp.nozzle" class="param-stepper" integer :min="100" :max="350" />
+            <span class="param-unit">°C</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 注射速度 -->
+      <div v-else-if="activeCategory === '注射速度'" class="param-group">
+        <div class="param-row">
+          <span class="param-name">一段速度</span>
+          <div class="param-control">
+            <van-stepper v-model="injectSpeed.stage1" class="param-stepper" integer :min="1" :max="99" />
+            <span class="param-unit">%</span>
+          </div>
+        </div>
+        <div class="param-row">
+          <span class="param-name">二段速度</span>
+          <div class="param-control">
+            <van-stepper v-model="injectSpeed.stage2" class="param-stepper" integer :min="1" :max="99" />
+            <span class="param-unit">%</span>
+          </div>
+        </div>
+        <div class="param-row">
+          <span class="param-name">三段速度</span>
+          <div class="param-control">
+            <van-stepper v-model="injectSpeed.stage3" class="param-stepper" integer :min="1" :max="99" />
+            <span class="param-unit">%</span>
+          </div>
+        </div>
+        <div class="param-row">
+          <span class="param-name">射胶终点位置</span>
+          <div class="param-control">
+            <van-stepper v-model="injectSpeed.vpPosition" class="param-stepper" integer :min="0" :max="200" />
+            <span class="param-unit">mm</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 注射压力 -->
+      <div v-else-if="activeCategory === '注射压力'" class="param-group">
+        <div class="param-row">
+          <span class="param-name">一段压力</span>
+          <div class="param-control">
+            <van-stepper v-model="injectPressure.stage1" class="param-stepper" integer :min="10" :max="250" />
+            <span class="param-unit">MPa</span>
+          </div>
+        </div>
+        <div class="param-row">
+          <span class="param-name">二段压力</span>
+          <div class="param-control">
+            <van-stepper v-model="injectPressure.stage2" class="param-stepper" integer :min="10" :max="250" />
+            <span class="param-unit">MPa</span>
+          </div>
+        </div>
+        <div class="param-row">
+          <span class="param-name">三段压力</span>
+          <div class="param-control">
+            <van-stepper v-model="injectPressure.stage3" class="param-stepper" integer :min="10" :max="250" />
+            <span class="param-unit">MPa</span>
+          </div>
+        </div>
+        <div class="param-row">
+          <span class="param-name">最大射胶压力</span>
+          <div class="param-control">
+            <van-stepper v-model="injectPressure.maxPressure" class="param-stepper" integer :min="50" :max="300" />
+            <span class="param-unit">MPa</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 保压 -->
+      <div v-else-if="activeCategory === '保压'" class="param-group">
+        <div class="param-row">
+          <span class="param-name">保压压力</span>
+          <div class="param-control">
+            <van-stepper v-model="holdingPressure.pressure" class="param-stepper" integer :min="10" :max="200" />
+            <span class="param-unit">MPa</span>
+          </div>
+        </div>
+        <div class="param-row">
+          <span class="param-name">保压时间</span>
+          <div class="param-control">
+            <van-stepper v-model="holdingPressure.time" class="param-stepper" integer :min="0" :max="60" :step="0.5" />
+            <span class="param-unit">s</span>
+          </div>
+        </div>
+        <div class="param-row">
+          <span class="param-name">背压</span>
+          <div class="param-control">
+            <van-stepper v-model="holdingPressure.backPressure" class="param-stepper" integer :min="0" :max="50" />
+            <span class="param-unit">MPa</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 冷却时间 -->
+      <div v-else class="param-group">
+        <div class="param-row">
+          <span class="param-name">冷却时间</span>
+          <div class="param-control">
+            <van-stepper v-model="cooling.time" class="param-stepper" integer :min="1" :max="120" :step="0.5" />
+            <span class="param-unit">s</span>
+          </div>
+        </div>
+        <div class="param-row">
+          <span class="param-name">顶出延时</span>
+          <div class="param-control">
+            <van-stepper v-model="cooling.ejectDelay" class="param-stepper" integer :min="0" :max="30" :step="0.5" />
+            <span class="param-unit">s</span>
+          </div>
+        </div>
+        <div class="param-row">
+          <span class="param-name">模温设定</span>
+          <div class="param-control">
+            <van-stepper v-model="cooling.moldTemp" class="param-stepper" integer :min="20" :max="180" />
+            <span class="param-unit">°C</span>
+          </div>
+        </div>
+      </div>
     </section>
 
     <footer class="action-bar split-action-bar">
@@ -74,30 +186,81 @@
         上一步
       </van-button>
       <van-button class="action-button confirm-button" block @click="confirmParams">
-        确认
+        开始生产
       </van-button>
     </footer>
+
+    <div v-if="showLoading" class="ai-loading-mask" aria-live="polite">
+      <div class="ai-loading-panel">
+        <div class="ai-spinner" aria-hidden="true"></div>
+        <p class="ai-loading-text">设备正在生产中</p>
+      </div>
+    </div>
   </main>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { reactive, ref, onBeforeUnmount } from 'vue'
 import { showToast } from 'vant'
 
 const emit = defineEmits(['back', 'next'])
 
 const categories = ['料筒温度', '注射速度', '注射压力', '保压', '冷却时间']
 const activeCategory = ref('注射速度')
-const speedOne = ref(20)
-const speedTwo = ref(20)
+
+const showLoading = ref(false)
+let loadingTimer = null
+
+onBeforeUnmount(() => {
+  if (loadingTimer) window.clearTimeout(loadingTimer)
+})
+
+const barrelTemp = reactive({
+  zone1: 180,
+  zone2: 200,
+  zone3: 220,
+  nozzle: 215
+})
+
+const injectSpeed = reactive({
+  stage1: 30,
+  stage2: 50,
+  stage3: 35,
+  vpPosition: 45
+})
+
+const injectPressure = reactive({
+  stage1: 80,
+  stage2: 100,
+  stage3: 70,
+  maxPressure: 160
+})
+
+const holdingPressure = reactive({
+  pressure: 60,
+  time: 8,
+  backPressure: 5
+})
+
+const cooling = reactive({
+  time: 25,
+  ejectDelay: 2,
+  moldTemp: 60
+})
 
 function confirmParams() {
-  showToast('参数已确认')
-  emit('next', {
-    speedOne: speedOne.value,
-    speedTwo: speedTwo.value,
-    activeCategory: activeCategory.value
-  })
+  showLoading.value = true
+  loadingTimer = window.setTimeout(() => {
+    showLoading.value = false
+    emit('next', {
+      barrelTemp: { ...barrelTemp },
+      injectSpeed: { ...injectSpeed },
+      injectPressure: { ...injectPressure },
+      holdingPressure: { ...holdingPressure },
+      cooling: { ...cooling },
+      activeCategory: activeCategory.value
+    })
+  }, 3000)
 }
 </script>
 
@@ -105,6 +268,7 @@ function confirmParams() {
 .setup3-page {
   display: flex;
   flex-direction: column;
+  gap: 12px;
   padding-bottom: 120px;
 }
 
@@ -131,54 +295,51 @@ function confirmParams() {
   text-align: center;
 }
 
-.parameter-layout {
+.category-tabs {
   display: grid;
-  grid-template-columns: 96px minmax(0, 1fr);
-  min-height: 480px;
-  margin-top: 14px;
-  border: 1px solid rgba(105, 189, 0, 0.16);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0;
+  border: 1px solid rgba(105, 189, 0, 0.14);
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.78);
-  box-shadow: 0 8px 28px rgba(105, 189, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(105, 189, 0, 0.06);
   overflow: hidden;
 }
 
-.parameter-tabs {
-  display: grid;
-  align-content: start;
-  border-right: 1px solid rgba(31, 36, 32, 0.1);
-  background: rgba(105, 189, 0, 0.03);
-}
-
-.parameter-tab {
+.category-tab {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 4px;
   min-width: 0;
-  min-height: 72px;
-  padding: 10px 6px;
+  min-height: 64px;
+  padding: 8px 6px;
   border: 0;
-  border-bottom: 1px solid rgba(31, 36, 32, 0.06);
+  border-right: 1px solid rgba(31, 36, 32, 0.06);
   color: rgba(31, 36, 32, 0.55);
-  background: transparent;
+  background: rgba(105, 189, 0, 0.02);
+  font-size: clamp(11px, 3vw, 13px);
+  font-weight: 500;
+  line-height: 1.15;
+  text-align: center;
   cursor: pointer;
-  transition: color 0.15s ease, background 0.15s ease;
+  transition: all 0.15s ease;
 }
 
-.parameter-tab:last-child {
-  border-bottom: 0;
+.category-tab:last-child {
+  border-right: 0;
 }
 
-.parameter-tab:hover {
+.category-tab:hover {
   background: rgba(105, 189, 0, 0.04);
 }
 
-.parameter-tab.active {
+.category-tab.active {
   color: #69bd00;
-  background: rgba(105, 189, 0, 0.08);
-  box-shadow: inset 3px 0 0 #69bd00;
+  font-weight: 700;
+  background: rgba(105, 189, 0, 0.1);
+  box-shadow: inset 0 -3px 0 #69bd00;
 }
 
 .tab-icon {
@@ -188,139 +349,133 @@ function confirmParams() {
 }
 
 .tab-text {
-  font-size: clamp(11px, 3.2vw, 14px);
+  font-size: clamp(11px, 3vw, 13px);
   font-weight: 500;
   line-height: 1.15;
   text-align: center;
 }
 
-.parameter-tab.active .tab-text {
+.category-tab.active .tab-text {
   font-weight: 600;
 }
 
-.parameter-content {
-  min-width: 0;
-  padding: 16px 16px 20px;
+.param-section {
+  padding: 0 2px;
 }
 
-.parameter-content-header {
+.param-section-header {
+  padding: 6px 4px 8px;
+  border-bottom: 1px solid rgba(105, 189, 0, 0.15);
+  margin-bottom: 8px;
+}
+
+.param-section-title {
+  color: #1f2420;
+  font-size: clamp(15px, 4.4vw, 19px);
+  font-weight: 600;
+}
+
+.param-group {
+  display: grid;
+  gap: 8px;
+}
+
+.param-row {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid rgba(105, 189, 0, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
 }
 
-.parameter-content-icon,
-.parameter-card-icon {
-  display: grid;
-  place-items: center;
-  color: rgba(105, 189, 0, 0.7);
-}
-
-.parameter-content-title {
-  color: #1f2420;
-  font-size: clamp(15px, 4.4vw, 20px);
-  font-weight: 600;
+.param-name {
+  flex: 0 0 7em;
+  color: rgba(31, 36, 32, 0.7);
+  font-size: clamp(13px, 3.8vw, 16px);
+  font-weight: 500;
   line-height: 1.2;
 }
 
-.parameter-divider {
-  height: 1px;
-  margin: 10px -16px 18px;
-  background: linear-gradient(90deg, rgba(105, 189, 0, 0.3), transparent);
-}
-
-.parameter-list {
-  display: grid;
-  gap: 14px;
-}
-
-.parameter-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 12px 14px;
-  border: 1px solid rgba(105, 189, 0, 0.12);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.8);
-  transition: box-shadow 0.15s ease;
-}
-
-.parameter-card:hover {
-  box-shadow: 0 2px 10px rgba(105, 189, 0, 0.08);
-}
-
-.parameter-card-header {
-  display: flex;
+.param-control {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
   flex: 0 0 auto;
 }
 
-.parameter-card-name {
-  color: #1f2420;
-  font-size: clamp(14px, 4vw, 18px);
+.param-unit {
+  color: rgba(31, 36, 32, 0.45);
+  font-size: clamp(12px, 3.4vw, 14px);
   font-weight: 500;
   line-height: 1;
+  white-space: nowrap;
 }
 
-.parameter-stepper :deep(.van-stepper__minus),
-.parameter-stepper :deep(.van-stepper__plus) {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
+.param-stepper :deep(.van-stepper__minus),
+.param-stepper :deep(.van-stepper__plus) {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
   color: #fff;
   background: #9bd969;
 }
 
-.parameter-stepper :deep(.van-stepper__input) {
-  width: 52px;
-  height: 34px;
-  margin: 0 6px;
+.param-stepper :deep(.van-stepper__input) {
+  width: 48px;
+  height: 30px;
+  margin: 0 4px;
   color: #1f2420;
   background: rgba(105, 189, 0, 0.06);
-  border: 1px solid rgba(105, 189, 0, 0.15);
-  border-radius: 8px;
-  font-size: clamp(14px, 4.2vw, 20px);
+  border: 1px solid rgba(105, 189, 0, 0.12);
+  border-radius: 6px;
+  font-size: clamp(13px, 3.8vw, 16px);
   font-weight: 600;
 }
 
-.parameter-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  min-height: 280px;
-  color: rgba(31, 36, 32, 0.35);
-  font-size: 15px;
+.ai-loading-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.76);
+  backdrop-filter: blur(8px);
+}
+
+.ai-loading-panel {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  width: min(82vw, 300px);
+  padding: 34px 24px;
+  border: 1px solid rgba(105, 189, 0, 0.22);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 18px 42px rgba(31, 36, 32, 0.18);
+}
+
+.ai-spinner {
+  width: 64px;
+  height: 64px;
+  border: 5px solid rgba(105, 189, 0, 0.16);
+  border-top-color: #69bd00;
+  border-radius: 50%;
+  animation: ai-spin 0.9s linear infinite;
+}
+
+.ai-loading-text {
+  margin: 0;
+  color: #1f2420;
+  font-size: clamp(17px, 4.8vw, 21px);
+  font-weight: 600;
+  line-height: 1.35;
   text-align: center;
 }
 
-.empty-icon {
-  opacity: 0.5;
-}
-
-@media (max-width: 380px) {
-  .parameter-layout {
-    grid-template-columns: 78px minmax(0, 1fr);
-  }
-
-  .parameter-tab {
-    min-height: 62px;
-    padding: 8px 4px;
-  }
-
-  .tab-text {
-    font-size: clamp(10px, 2.8vw, 12px);
-  }
-
-  .parameter-content {
-    padding: 12px 12px 16px;
-  }
-
-  .parameter-card {
-    padding: 10px 10px;
-  }
+@keyframes ai-spin {
+  to { transform: rotate(360deg); }
 }
 </style>
