@@ -8,3 +8,7 @@ yarn-error.log*
 pnpm-debug.log*
 vite.out.log
 vite.err.log
+.vite-cache
+vite.log
+vite_out.log
+*.ps1
