@@ -1,6 +1,6 @@
 <template>
   <van-config-provider :theme-vars="themeVars">
-    <main v-if="currentPage === 'connect'" class="page-shell connect-page">
+    <main v-if="currentPage === 'connect'" class="page-shell connect-page fade-in">
       <header class="brand-header">
         <img class="brand-logo" src="/logo.png" alt="东华机械 Welltec" />
       </header>
@@ -9,36 +9,53 @@
         <img class="machine-image" src="/machine.jpg" :alt="pageName" />
       </section>
 
-      <section class="machine-info" aria-label="设备信息">
-        <p class="info-row">
-          <span class="info-label">机身编码:</span>
-          <span class="info-value">{{ serialNo }}</span>
-        </p>
-        <p class="info-row">
-          <span class="info-label">机器型号:</span>
-          <span class="info-value">{{ modelName }}</span>
-        </p>
-        <p class="info-row">
-          <span class="info-label">机器吨位:</span>
-          <span class="info-value">300T</span>
-        </p>
-        <p class="info-row">
-          <span class="info-label">射胶量:</span>
-          <span class="info-value">562g</span>
-        </p>
-        <p class="info-row">
-          <span class="info-label">射胶压力:</span>
-          <span class="info-value">221 Mpa</span>
-        </p>
-        <p class="info-row">
-          <span class="info-label">保压压力:</span>
-          <span class="info-value">177 Mpa</span>
-        </p>
+      <section class="machine-info-card" aria-label="设备信息">
+        <div class="info-card-inner">
+          <p class="info-row">
+            <span class="info-label">机身编码:</span>
+            <span class="info-value">{{ serialNo }}</span>
+          </p>
+          <p class="info-row">
+            <span class="info-label">机器型号:</span>
+            <span class="info-value">{{ modelName }}</span>
+          </p>
+          <p class="info-row">
+            <span class="info-label">机器吨位:</span>
+            <span class="info-value">300T</span>
+          </p>
+          <p class="info-row">
+            <span class="info-label">射胶量:</span>
+            <span class="info-value">562g</span>
+          </p>
+          <p class="info-row">
+            <span class="info-label">射胶压力:</span>
+            <span class="info-value">221 Mpa</span>
+          </p>
+          <p class="info-row">
+            <span class="info-label">保压压力:</span>
+            <span class="info-value">177 Mpa</span>
+          </p>
+        </div>
       </section>
 
       <section class="countdown-area" aria-label="倒计时">
-        <div class="countdown-circle" :class="{ timeout: isTimeout }">{{ secondsLeft }}</div>
-        <p class="connection-message" :class="{ timeout: isTimeout }" v-html="connectionMessage"></p>
+        <div class="countdown-ring-wrapper">
+          <svg class="countdown-svg" viewBox="0 0 160 160">
+            <circle class="ring-bg" cx="80" cy="80" r="70" />
+            <circle
+              class="ring-progress"
+              :class="{ timeout: isTimeout }"
+              cx="80" cy="80" r="70"
+              :stroke-dasharray="circumference"
+              :stroke-dashoffset="dashOffset"
+            />
+          </svg>
+          <div class="countdown-number" :class="{ timeout: isTimeout }">{{ secondsLeft }}</div>
+        </div>
+        <div class="status-indicator" :class="{ timeout: isTimeout }">
+          <span v-if="!isTimeout" class="pulse-dot"></span>
+          <p class="connection-message" :class="{ timeout: isTimeout }" v-html="connectionMessage"></p>
+        </div>
         <van-button v-show="isTimeout" class="retry-button" type="primary" round @click="retry">
           重试
         </van-button>
@@ -98,6 +115,13 @@ const isTimeout = computed(() => secondsLeft.value === 0)
 const connectionMessage = computed(() =>
   isTimeout.value ? '连接超时' : '正在连接注塑机...<br>请在设备上允许操作'
 )
+
+const TOTAL_SECONDS = 30
+const circumference = 2 * Math.PI * 70 // r=70
+const dashOffset = computed(() => {
+  const progress = secondsLeft.value / TOTAL_SECONDS
+  return circumference * (1 - progress)
+})
 
 const themeVars = {
   primaryColor: '#69bd00',

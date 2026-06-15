@@ -16,13 +16,35 @@ body {
     sans-serif;
 }
 
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
 .page-shell {
   position: relative;
-  min-height: 100vh;
-  padding: 18px 18px 96px;
+  height: 100vh;
+  height: 100dvh;
+  padding: 14px 18px 0;
+  overflow: hidden;
   background:
-    linear-gradient(180deg, rgba(105, 189, 0, 0.08), rgba(255, 255, 255, 0.96) 34%),
+    linear-gradient(180deg, rgba(105, 189, 0, 0.10), rgba(255, 255, 255, 0.97) 38%),
     #fff;
+}
+
+.fade-in {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .connect-page {
@@ -34,9 +56,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  min-height: 48px;
-  margin-bottom: 8px;
+  min-height: 40px;
+  margin-bottom: 4px;
   padding: 0;
+  flex-shrink: 0;
 }
 
 .brand-logo {
@@ -51,9 +74,10 @@ body {
   justify-content: center;
   min-height: 0;
   margin: 0;
-  padding: 10px 0 0;
+  padding: 4px 0 0;
   overflow: hidden;
   background: transparent;
+  flex-shrink: 1;
 }
 
 .machine-image {
@@ -61,18 +85,29 @@ body {
   width: 100%;
   height: auto;
   max-width: 100%;
-  max-height: 240px;
+  max-height: 180px;
   object-fit: contain;
   mix-blend-mode: multiply;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.1));
 }
 
-.machine-info {
+.machine-info-card {
+  margin: 8px 4px 0;
+  padding: 0;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow:
+    0 1px 3px rgba(31, 36, 32, 0.06),
+    0 8px 24px rgba(105, 189, 0, 0.08);
+  overflow: hidden;
+  flex-shrink: 1;
+}
+
+.info-card-inner {
   display: grid;
   justify-content: center;
-  gap: 10px;
-  margin-top: 3vh;
-  padding: 0;
+  gap: 6px;
+  padding: 14px 22px;
 }
 
 .info-row {
@@ -81,9 +116,9 @@ body {
   align-items: center;
   column-gap: 8px;
   margin: 0;
-  min-height: 32px;
+  min-height: 26px;
   color: #1f2420;
-  font-size: clamp(14.7px, 4.41vw, 21px);
+  font-size: clamp(13.5px, 4vw, 19px);
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: 0;
@@ -102,46 +137,107 @@ body {
 .countdown-area {
   display: grid;
   justify-items: center;
-  margin: auto 0 28vh 0;
+  align-content: center;
+  flex: 1 1 0;
+  min-height: 0;
+  margin: 0;
   padding: 0;
-  gap: 14px;
+  gap: 10px;
 }
 
-.countdown-circle {
+.countdown-ring-wrapper {
+  position: relative;
   display: grid;
   place-items: center;
-  width: clamp(119px, 34vw, 152px);
-  height: clamp(119px, 34vw, 152px);
-  color: #69bd00;
-  border: 3px solid #69bd00;
-  border-radius: 50%;
-  background: rgba(105, 189, 0, 0.08);
-  box-shadow:
-    0 0 0 8px rgba(105, 189, 0, 0.08),
-    0 18px 36px rgba(0, 0, 0, 0.22);
-  font-size: clamp(54px, 14vw, 74px);
-  font-weight: 600;
-  line-height: 1;
+  width: clamp(110px, 30vw, 140px);
+  height: clamp(110px, 30vw, 140px);
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.15));
 }
 
-.countdown-circle.timeout {
+.countdown-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ring-bg {
+  fill: none;
+  stroke: rgba(105, 189, 0, 0.12);
+  stroke-width: 7;
+}
+
+.ring-progress {
+  fill: none;
+  stroke: #69bd00;
+  stroke-width: 7;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear, stroke 0.4s ease;
+}
+
+.ring-progress.timeout {
+  stroke: #ff7a59;
+}
+
+.countdown-number {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(44px, 11vw, 60px);
+  font-weight: 700;
+  line-height: 1;
+  color: #69bd00;
+  transition: color 0.4s ease;
+}
+
+.countdown-number.timeout {
   color: #ff7a59;
-  border-color: #ff7a59;
-  background: rgba(255, 122, 89, 0.1);
-  box-shadow:
-    0 0 0 8px rgba(255, 122, 89, 0.08),
-    0 18px 36px rgba(0, 0, 0, 0.22);
+  animation: shakeOnce 0.5s ease;
+}
+
+@keyframes shakeOnce {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 2em;
+}
+
+.status-indicator.timeout {
+  gap: 0;
+}
+
+.pulse-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #69bd00;
+  animation: pulseDot 1.6s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
 }
 
 .connection-message {
   max-width: 320px;
   margin: 0;
-  height: 2.4em;
   display: flex;
   align-items: center;
   justify-content: center;
   color: rgba(31, 36, 32, 0.82);
-  font-size: clamp(18px, 5.2vw, 22px);
+  font-size: clamp(17px, 5vw, 21px);
   line-height: 1.5;
   letter-spacing: 0;
   text-align: center;
@@ -166,13 +262,19 @@ body {
   font-size: 18px;
   font-weight: 600;
   letter-spacing: 2px;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
+  animation: fadeInUp 0.4s ease-out both;
 }
 
 .retry-button:hover {
   background: #7ed600;
-  box-shadow: 0 6px 18px rgba(105, 189, 0, 0.4);
-  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(105, 189, 0, 0.45);
+  transform: translateY(-2px);
+}
+
+.retry-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(105, 189, 0, 0.3);
 }
 
 .action-bar {
@@ -200,6 +302,11 @@ body {
   color: #fff;
   background: #9bd969;
   border-right: 0;
+  transition: background 0.2s ease;
+}
+
+.cancel-button:hover {
+  background: #8ccf55;
 }
 
 .split-action-bar {
@@ -242,4 +349,12 @@ body {
 @keyframes countdown-pulse {
   0%, 100% { box-shadow: 0 0 0 8px rgba(105, 189, 0, 0.08), 0 18px 36px rgba(0, 0, 0, 0.22); }
   50% { box-shadow: 0 0 0 14px rgba(105, 189, 0, 0.04), 0 18px 40px rgba(0, 0, 0, 0.18); }
+}
+
+.machine-image {
+  transition: transform 0.3s ease;
+}
+
+.machine-image:hover {
+  transform: scale(1.02);
 }

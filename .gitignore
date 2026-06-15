@@ -12,3 +12,5 @@ vite.err.log
 vite.log
 vite_out.log
 *.ps1
+screenshot_after.png
+screenshot_before.png
