@@ -173,14 +173,20 @@ function syncPercentByLevel(item) {
 </script>
 
 <style scoped>
+.brand-header {
+  flex-shrink: 0;
+}
+
 .defect-page {
   display: flex;
   flex-direction: column;
-  padding-bottom: 120px;
+  padding-bottom: 0;
+  overflow: hidden;
 }
 
 .defect-hero {
   padding: 8px 4px 4px;
+  flex-shrink: 0;
 }
 
 .defect-title {
@@ -222,10 +228,32 @@ function syncPercentByLevel(item) {
   height: 1px;
   margin: 10px -18px 14px;
   background: linear-gradient(90deg, transparent, rgba(105, 189, 0, 0.3), transparent);
+  flex-shrink: 0;
 }
 
 .defect-list {
   padding: 0 2px;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 80px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(105, 189, 0, 0.25) transparent;
+}
+
+.defect-list::-webkit-scrollbar {
+  width: 3px;
+}
+
+.defect-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.defect-list::-webkit-scrollbar-thumb {
+  background: rgba(105, 189, 0, 0.25);
+  border-radius: 3px;
 }
 
 .defect-group-header {
@@ -233,13 +261,17 @@ function syncPercentByLevel(item) {
   align-items: center;
   gap: 6px;
   padding: 10px 4px 6px;
-  color: rgba(105, 189, 0, 0.7);
+  color: rgba(105, 189, 0, 0.8);
   font-size: clamp(12px, 3.4vw, 14px);
   font-weight: 600;
   letter-spacing: 0.5px;
-  text-transform: uppercase;
-  border-bottom: 1px solid rgba(105, 189, 0, 0.12);
+  border-bottom: 1px solid rgba(105, 189, 0, 0.15);
   margin-bottom: 2px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: rgba(248, 252, 244, 0.97);
+  backdrop-filter: blur(6px);
 }
 
 .defect-group-header:first-child {
@@ -262,9 +294,10 @@ function syncPercentByLevel(item) {
 }
 
 .defect-item {
-  border-radius: 8px;
+  border-radius: 10px;
   transition: background 0.2s ease, box-shadow 0.2s ease;
   overflow: hidden;
+  margin-bottom: 2px;
 }
 
 .defect-item:nth-child(even) {
@@ -272,8 +305,8 @@ function syncPercentByLevel(item) {
 }
 
 .defect-item.expanded {
-  background: rgba(105, 189, 0, 0.05) !important;
-  box-shadow: 0 1px 8px rgba(105, 189, 0, 0.08);
+  background: rgba(105, 189, 0, 0.06) !important;
+  box-shadow: 0 2px 12px rgba(105, 189, 0, 0.1);
 }
 
 .defect-label {
