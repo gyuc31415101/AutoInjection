@@ -144,6 +144,11 @@ html, body {
   padding: 0;
   gap: 10px;
   transform: translateY(-20%);
+  transition: transform 0.4s ease;
+}
+
+.countdown-area.timeout {
+  transform: translateY(-10%);
 }
 
 .countdown-ring-wrapper {

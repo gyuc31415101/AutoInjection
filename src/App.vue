@@ -38,7 +38,7 @@
         </div>
       </section>
 
-      <section class="countdown-area" aria-label="倒计时">
+      <section class="countdown-area" :class="{ timeout: isTimeout }" aria-label="倒计时">
         <div class="countdown-ring-wrapper">
           <svg class="countdown-svg" viewBox="0 0 160 160">
             <circle class="ring-bg" cx="80" cy="80" r="70" />
