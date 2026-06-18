@@ -135,20 +135,19 @@ html, body {
 }
 
 .countdown-area {
-  display: grid;
-  justify-items: center;
-  align-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   flex: 1 1 0;
   min-height: 0;
   margin: 0;
   padding: 0;
   gap: 10px;
-  transform: translateY(-20%);
-  transition: transform 0.4s ease;
+  transform: translateY(-40%);
 }
 
 .countdown-area.timeout {
-  transform: translateY(-10%);
+  transform: translateY(-28%);
 }
 
 .countdown-ring-wrapper {
@@ -158,6 +157,34 @@ html, body {
   width: clamp(110px, 30vw, 140px);
   height: clamp(110px, 30vw, 140px);
   filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.15));
+  margin-top: auto;
+  animation: breathe 2.5s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(105, 189, 0, 0.3)) drop-shadow(0 12px 28px rgba(0, 0, 0, 0.15));
+  }
+  50% {
+    filter: drop-shadow(0 0 24px rgba(105, 189, 0, 0.7)) drop-shadow(0 0 48px rgba(105, 189, 0, 0.3)) drop-shadow(0 12px 28px rgba(0, 0, 0, 0.15));
+  }
+}
+
+.countdown-ring-wrapper.timeout {
+  animation: breathe-red 2.5s ease-in-out infinite;
+}
+
+@keyframes breathe-red {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(255, 122, 89, 0.3)) drop-shadow(0 12px 28px rgba(0, 0, 0, 0.15));
+  }
+  50% {
+    filter: drop-shadow(0 0 24px rgba(255, 122, 89, 0.7)) drop-shadow(0 0 48px rgba(255, 122, 89, 0.3)) drop-shadow(0 12px 28px rgba(0, 0, 0, 0.15));
+  }
+}
+
+.status-indicator {
+  margin-top: 0;
 }
 
 .countdown-svg {
@@ -172,6 +199,11 @@ html, body {
   fill: none;
   stroke: rgba(105, 189, 0, 0.12);
   stroke-width: 7;
+  transition: stroke 0.4s ease;
+}
+
+.countdown-ring-wrapper.timeout .ring-bg {
+  stroke: rgba(255, 122, 89, 0.15);
 }
 
 .ring-progress {
